@@ -28,14 +28,14 @@ export function Footer() {
               <Linkedin className="h-4 w-4" />
             </a>
             <a
-              href="https://wa.me/254700000000"
+              href="https://wa.me/254798592946"
               aria-label="WhatsApp"
               className="grid h-9 w-9 place-items-center rounded-full border border-border hover:bg-accent hover:text-accent-foreground transition-colors"
             >
               <MessageCircle className="h-4 w-4" />
             </a>
             <a
-              href="mailto:hello@kelvinwambua.com"
+              href="mailto:bshpkelvin@gmail.com"
               aria-label="Email"
               className="grid h-9 w-9 place-items-center rounded-full border border-border hover:bg-primary hover:text-primary-foreground transition-colors"
             >
@@ -71,11 +71,11 @@ export function Footer() {
             </li>
             <li className="flex items-start gap-2">
               <Mail className="h-4 w-4 mt-0.5 text-accent" />
-              hello@kelvinwambua.com
+              bshpkelvin@gmail.com
             </li>
             <li className="flex items-start gap-2">
               <MessageCircle className="h-4 w-4 mt-0.5 text-accent" />
-              +254 700 000 000
+              +254 798 592 946
             </li>
           </ul>
         </div>

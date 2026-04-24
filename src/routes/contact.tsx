@@ -104,7 +104,7 @@ function ContactPage() {
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-wider text-muted-foreground">Email</p>
-                  <a href="mailto:hello@kelvinwambua.com" className="font-semibold text-foreground hover:text-primary">hello@kelvinwambua.com</a>
+                  <a href="mailto:bshpkelvin@gmail.com" className="font-semibold text-foreground hover:text-primary">bshpkelvin@gmail.com</a>
                 </div>
               </div>
             </Card>
@@ -115,7 +115,7 @@ function ContactPage() {
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-wider text-muted-foreground">Phone</p>
-                  <a href="tel:+254700000000" className="font-semibold text-foreground hover:text-primary">+254 700 000 000</a>
+                  <a href="tel:+254798592946" className="font-semibold text-foreground hover:text-primary">+254 798 592 946</a>
                 </div>
               </div>
             </Card>
@@ -137,10 +137,10 @@ function ContactPage() {
                 <a href="https://linkedin.com" aria-label="LinkedIn" className="grid h-10 w-10 place-items-center rounded-full bg-primary-foreground/15 hover:bg-primary-foreground/25 transition-colors">
                   <Linkedin className="h-4 w-4" />
                 </a>
-                <a href="https://wa.me/254700000000" aria-label="WhatsApp" className="grid h-10 w-10 place-items-center rounded-full bg-primary-foreground/15 hover:bg-primary-foreground/25 transition-colors">
+                <a href="https://wa.me/254798592946" aria-label="WhatsApp" className="grid h-10 w-10 place-items-center rounded-full bg-primary-foreground/15 hover:bg-primary-foreground/25 transition-colors">
                   <MessageCircle className="h-4 w-4" />
                 </a>
-                <a href="mailto:hello@kelvinwambua.com" aria-label="Email" className="grid h-10 w-10 place-items-center rounded-full bg-primary-foreground/15 hover:bg-primary-foreground/25 transition-colors">
+                <a href="mailto:bshpkelvin@gmail.com" aria-label="Email" className="grid h-10 w-10 place-items-center rounded-full bg-primary-foreground/15 hover:bg-primary-foreground/25 transition-colors">
                   <Mail className="h-4 w-4" />
                 </a>
               </div>
