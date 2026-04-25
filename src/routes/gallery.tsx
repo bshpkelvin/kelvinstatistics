@@ -7,6 +7,7 @@ import children from "@/assets/kibera-children.jpg";
 import landscape from "@/assets/isiolo-landscape.jpg";
 import community from "@/assets/community-impact.jpg";
 import portrait from "@/assets/kelvin-portrait.jpg";
+import gotuIsiolo from "@/assets/gotu-isiolo-visionfund.jpg";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -23,6 +24,7 @@ export const Route = createFileRoute("/gallery")({
 });
 
 const photos = [
+  { src: gotuIsiolo, alt: "Kelvin Wambua conducting community surveys in Gotu, Isiolo County with Vision Fund Kenya", caption: "Gotu, Isiolo — Vision Fund Kenya surveys", span: "md:col-span-2 md:row-span-2" },
   { src: field, alt: "Field data collection under acacia tree", caption: "ODK fieldwork — rural Kenya", span: "md:col-span-2 md:row-span-2" },
   { src: children, alt: "Children supported by Hope for Kibera", caption: "Hope for Kibera classroom" },
   { src: data, alt: "Data analysis workspace", caption: "Crunching survey data" },
