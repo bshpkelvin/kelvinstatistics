@@ -8,6 +8,7 @@ import landscape from "@/assets/isiolo-landscape.jpg";
 import community from "@/assets/community-impact.jpg";
 import portrait from "@/assets/kelvin-portrait.jpg";
 import gotuIsiolo from "@/assets/gotu-isiolo-visionfund.jpg";
+import genderWorkshop from "@/assets/gender-inclusion-kcb-workshop.jpg";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/gallery")({
 });
 
 const photos = [
+  { src: genderWorkshop, alt: "Kelvin Wambua receiving a Certificate of Participation at a Gender Inclusion in Financial Literacy and Disability Inclusion workshop at KCB Leadership Centre", caption: "KCB Leadership Centre — Gender & Disability Inclusion workshop", span: "md:col-span-2" },
   { src: gotuIsiolo, alt: "Kelvin Wambua conducting community surveys in Gotu, Isiolo County with Vision Fund Kenya", caption: "Gotu, Isiolo — Vision Fund Kenya surveys", span: "md:col-span-2 md:row-span-2" },
   { src: field, alt: "Field data collection under acacia tree", caption: "ODK fieldwork — rural Kenya", span: "md:col-span-2 md:row-span-2" },
   { src: children, alt: "Children supported by Hope for Kibera", caption: "Hope for Kibera classroom" },
