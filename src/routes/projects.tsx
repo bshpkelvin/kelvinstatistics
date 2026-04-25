@@ -7,6 +7,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import dataImg from "@/assets/data-analysis.jpg";
 import fieldImg from "@/assets/fieldwork-1.jpg";
 import landscape from "@/assets/isiolo-landscape.jpg";
+import gotuIsiolo from "@/assets/gotu-isiolo-visionfund.jpg";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
@@ -27,14 +28,14 @@ const projects = [
     icon: Database,
     title: "Loan Distribution Survey Analysis",
     client: "VisionFund Kenya · World Vision THRIVE",
-    image: dataImg,
+    image: gotuIsiolo,
     description:
-      "Led the design, deployment and analysis of a household survey assessing how microloans translated into income, asset growth and resilience among smallholder borrowers.",
+      "Spent an insightful field day in Gotu, Isiolo County conducting surveys and community data collection with Vision Fund Kenya, capturing rural perspectives on challenges, opportunities, and resilience.",
     tools: ["ODK Collect", "Excel", "R", "Power BI"],
     outcomes: [
-      "Surveyed 1,200+ households across 4 counties",
+      "Engaged community members in Gotu, Isiolo County",
       "Identified 3 program adjustments adopted by management",
-      "Delivered visual dashboards for donor reporting",
+      "Translated field insights into data-driven decision-making",
     ],
   },
   {
