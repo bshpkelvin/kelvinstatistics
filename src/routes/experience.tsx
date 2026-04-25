@@ -32,6 +32,7 @@ const roles = [
       "Cleaned, analysed and visualised survey data informing program adaptation and donor reporting.",
       "Coordinated field enumerator teams in Isiolo and Kilifi during multi-week data collection cycles.",
       "Contributed to MVC mapping fieldwork supporting child-focused programming in Kilifi.",
+      "Attended a transformative workshop on Gender Inclusion in Financial Literacy and Disability Inclusion at KCB Leadership Centre, earning a Certificate of Participation.",
     ],
   },
   {
