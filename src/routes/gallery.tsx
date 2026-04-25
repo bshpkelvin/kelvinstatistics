@@ -1,6 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import field from "@/assets/fieldwork-1.jpg";
 import data from "@/assets/data-analysis.jpg";
 import children from "@/assets/kibera-children.jpg";
@@ -25,17 +33,89 @@ export const Route = createFileRoute("/gallery")({
 });
 
 const photos = [
-  { src: genderWorkshop, alt: "Kelvin Wambua receiving a Certificate of Participation at a Gender Inclusion in Financial Literacy and Disability Inclusion workshop at KCB Leadership Centre", caption: "KCB Leadership Centre — Gender & Disability Inclusion workshop", span: "md:col-span-2" },
-  { src: gotuIsiolo, alt: "Kelvin Wambua conducting community surveys in Gotu, Isiolo County with Vision Fund Kenya", caption: "Gotu, Isiolo — Vision Fund Kenya surveys", span: "md:col-span-2 md:row-span-2" },
-  { src: field, alt: "Field data collection under acacia tree", caption: "ODK fieldwork — rural Kenya", span: "md:col-span-2 md:row-span-2" },
-  { src: children, alt: "Children supported by Hope for Kibera", caption: "Hope for Kibera classroom" },
-  { src: data, alt: "Data analysis workspace", caption: "Crunching survey data" },
-  { src: landscape, alt: "Aerial view of northern Kenya landscape", caption: "Mission to Isiolo", span: "md:col-span-2" },
-  { src: community, alt: "Hands holding seedlings", caption: "Resilience in every harvest" },
-  { src: portrait, alt: "Kelvin portrait", caption: "On the road again" },
+  {
+    src: genderWorkshop,
+    alt: "Kelvin Wambua receiving a Certificate of Participation at a Gender Inclusion in Financial Literacy and Disability Inclusion workshop at KCB Leadership Centre",
+    title: "Gender & Disability Inclusion Workshop",
+    caption: "KCB Leadership Centre — Gender & Disability Inclusion workshop",
+    location: "KCB Leadership Centre",
+    description:
+      "A transformative workshop focused on Gender Inclusion in Financial Literacy and Disability Inclusion. The session strengthened practical understanding of equitable access, inclusive programming, and how financial literacy can create better opportunities for all.",
+    span: "md:col-span-2",
+  },
+  {
+    src: gotuIsiolo,
+    alt: "Kelvin Wambua conducting community surveys in Gotu, Isiolo County with Vision Fund Kenya",
+    title: "Vision Fund Kenya Field Surveys",
+    caption: "Gotu, Isiolo — Vision Fund Kenya surveys",
+    location: "Gotu, Isiolo County",
+    description:
+      "A field data collection assignment with Vision Fund Kenya, engaging community members to understand rural challenges, opportunities, and lived experiences. Each interaction contributed meaningful insights for evidence-based and data-driven decision-making.",
+    span: "md:col-span-2 md:row-span-2",
+  },
+  {
+    src: field,
+    alt: "Field data collection under acacia tree",
+    title: "ODK Field Data Collection",
+    caption: "ODK fieldwork — rural Kenya",
+    location: "Rural Kenya",
+    description:
+      "Hands-on monitoring and evaluation work using digital data collection tools in rural communities. The process involved structured interviews, observation, and careful documentation to support accurate reporting and program learning.",
+    span: "md:col-span-2 md:row-span-2",
+  },
+  {
+    src: children,
+    alt: "Children supported by Hope for Kibera",
+    title: "Hope for Kibera Classroom",
+    caption: "Hope for Kibera classroom",
+    location: "Kibera, Nairobi",
+    description:
+      "A community-centered moment from education and support activities with children in Kibera. The work reflects Kelvin's commitment to social impact, youth support, and strengthening opportunities in underserved communities.",
+  },
+  {
+    src: data,
+    alt: "Data analysis workspace",
+    title: "Survey Data Analysis",
+    caption: "Crunching survey data",
+    location: "Monitoring & Evaluation workspace",
+    description:
+      "Transforming raw field responses into useful insights through cleaning, analysis, visualization, and reporting. This stage turns community feedback into evidence that can guide program decisions and measure progress.",
+  },
+  {
+    src: landscape,
+    alt: "Aerial view of northern Kenya landscape",
+    title: "Mission to Isiolo",
+    caption: "Mission to Isiolo",
+    location: "Isiolo County",
+    description:
+      "A glimpse of the terrain and context surrounding field assignments in northern Kenya. Understanding place, distance, and environment is essential for interpreting data and designing practical community interventions.",
+    span: "md:col-span-2",
+  },
+  {
+    src: community,
+    alt: "Hands holding seedlings",
+    title: "Community Resilience",
+    caption: "Resilience in every harvest",
+    location: "Community impact work",
+    description:
+      "A symbol of growth, resilience, and local development. The image represents the connection between data, livelihoods, and the long-term impact of programs that support families and communities.",
+  },
+  {
+    src: portrait,
+    alt: "Kelvin portrait",
+    title: "On the Road Again",
+    caption: "On the road again",
+    location: "Professional fieldwork journey",
+    description:
+      "A portrait of Kelvin Wambua during his ongoing professional journey across data collection, monitoring and evaluation, community engagement, and humanitarian-focused assignments.",
+  },
 ];
 
+type Photo = (typeof photos)[number];
+
 function GalleryPage() {
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+
   return (
     <PageLayout>
       <section className="section-pad bg-[var(--gradient-soft)]">
@@ -52,10 +132,13 @@ function GalleryPage() {
         <div className="container-prose">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 auto-rows-[220px] gap-4">
             {photos.map((p, i) => (
-              <figure
+              <button
                 key={i}
+                type="button"
+                onClick={() => setSelectedPhoto(p)}
                 className={`group relative overflow-hidden rounded-2xl border border-border hover-lift animate-scale-in ${p.span ?? ""}`}
                 style={{ animationDelay: `${i * 0.06}s` }}
+                aria-label={`View more information about ${p.title}`}
               >
                 <img
                   src={p.src}
@@ -63,14 +146,42 @@ function GalleryPage() {
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <figcaption className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-primary/90 to-transparent text-primary-foreground text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  {p.caption}
-                </figcaption>
-              </figure>
+                <span className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-primary/90 to-transparent text-left text-primary-foreground opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
+                  <span className="block text-sm font-semibold">{p.caption}</span>
+                  <span className="mt-1 block text-xs text-primary-foreground/85">Tap to read more</span>
+                </span>
+              </button>
             ))}
           </div>
         </div>
       </section>
+
+      <Dialog open={Boolean(selectedPhoto)} onOpenChange={(open) => !open && setSelectedPhoto(null)}>
+        {selectedPhoto && (
+          <DialogContent className="max-h-[92vh] overflow-y-auto p-0 sm:max-w-3xl">
+            <img
+              src={selectedPhoto.src}
+              alt={selectedPhoto.alt}
+              className="aspect-[4/3] w-full rounded-t-lg object-cover sm:aspect-[16/9]"
+            />
+            <div className="p-6">
+              <DialogHeader>
+                <DialogTitle className="text-2xl">{selectedPhoto.title}</DialogTitle>
+                <DialogDescription>{selectedPhoto.caption}</DialogDescription>
+              </DialogHeader>
+              <div className="mt-5 space-y-4">
+                <div className="rounded-lg border border-border bg-muted/40 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    Location / Context
+                  </p>
+                  <p className="mt-1 font-medium text-foreground">{selectedPhoto.location}</p>
+                </div>
+                <p className="text-sm leading-7 text-muted-foreground">{selectedPhoto.description}</p>
+              </div>
+            </div>
+          </DialogContent>
+        )}
+      </Dialog>
     </PageLayout>
   );
 }
