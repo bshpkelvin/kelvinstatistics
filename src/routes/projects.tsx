@@ -211,13 +211,13 @@ function ProjectsPage() {
                       </p>
                       <Button
                         type="button"
-                        className="mt-5"
+                        className="mt-5 shadow-[var(--shadow-glow)] transition-transform duration-300 hover:scale-[1.02]"
                         onClick={(event) => {
                           event.stopPropagation();
                           setIsEncouragementOpen(true);
                         }}
                       >
-                        👉 Follow Christ Today
+                        Follow Christ Today
                       </Button>
                     </div>
                   </div>
@@ -229,11 +229,25 @@ function ProjectsPage() {
       </section>
 
       <Dialog open={isEncouragementOpen} onOpenChange={setIsEncouragementOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Follow Christ Today</DialogTitle>
-            <DialogDescription>
-              Jesus loves you and has a purpose for your life. Start your journey today.
+        <DialogContent className="overflow-hidden border-primary/20 bg-background/95 shadow-[var(--shadow-glow)] backdrop-blur-xl sm:max-w-2xl">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,color-mix(in_oklab,var(--primary)_18%,transparent),transparent_35%),radial-gradient(circle_at_bottom_right,color-mix(in_oklab,var(--primary-glow)_16%,transparent),transparent_38%)]" />
+          <div className="pointer-events-none absolute right-12 top-10 h-28 w-px rotate-45 bg-primary/25 blur-[1px]" />
+          <div className="pointer-events-none absolute right-4 top-24 h-px w-32 -rotate-12 bg-primary/20 blur-[1px]" />
+          <DialogHeader className="relative">
+            <DialogTitle className="text-2xl font-bold text-foreground">My Journey with God</DialogTitle>
+            <DialogDescription className="space-y-4 pt-3 text-left text-sm leading-7 text-muted-foreground md:text-base">
+              <span className="block">
+                My journey is a testimony of God’s grace and guidance. From my education in Applied Statistics with Computing to my work in Monitoring & Evaluation and humanitarian service, every step has been ordered by God. Through opportunities at World Vision Kenya and the growth of Hope for Kibera, I have seen how God uses purpose to transform lives.
+              </span>
+              <span className="block">
+                Serving in media at church has also shown me that ministry is not only on the pulpit—it is in the skills we use daily. God has been the foundation of everything I have achieved, opening doors, providing strength, and giving direction even in uncertain moments.
+              </span>
+              <span className="block">
+                Everything I have accomplished is not by my own strength, but by God’s favor and purpose. My life is a reflection of His work, and my desire is to continue serving, impacting lives, and walking in His calling.
+              </span>
+              <span className="block rounded-2xl border border-primary/15 bg-primary/10 p-4 font-semibold text-foreground">
+                Choose Christ today, and allow Him to guide your path and purpose.
+              </span>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
