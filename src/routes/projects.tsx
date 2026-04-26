@@ -147,9 +147,16 @@ function ProjectsPage() {
 
       <section className="pb-20">
         <div className="container-prose">
-          <button
-            type="button"
+          <div
+            role="button"
+            tabIndex={0}
             onClick={() => setIsFaithOpen((open) => !open)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setIsFaithOpen((open) => !open);
+              }
+            }}
             className="group relative block w-full overflow-hidden rounded-3xl border border-primary/15 bg-card/70 p-0 text-left shadow-[var(--shadow-elegant)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[var(--shadow-glow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             aria-expanded={isFaithOpen}
           >
@@ -217,7 +224,7 @@ function ProjectsPage() {
                 </div>
               </div>
             </div>
-          </button>
+          </div>
         </div>
       </section>
 
