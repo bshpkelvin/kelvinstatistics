@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
-import portrait from "@/assets/kelvin-portrait.jpg";
+import portrait from "@/assets/kelvin-portrait.webp";
 import dataImg from "@/assets/data-analysis.jpg";
 import fieldImg from "@/assets/fieldwork-1.jpg";
 
@@ -18,6 +18,7 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: portrait },
       { name: "twitter:image", content: portrait },
     ],
+    links: [{ rel: "preload", as: "image", href: portrait, fetchPriority: "high" }],
   }),
   component: HomePage,
 });
@@ -115,8 +116,11 @@ function HomePage() {
                 <img
                   src={portrait}
                   alt="Kelvin Wambua, M&E specialist"
-                  width={1024}
-                  height={1280}
+                  width={768}
+                  height={1814}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                   className="h-full w-full object-cover"
                 />
                 <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-primary/90 to-transparent">
