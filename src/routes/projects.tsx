@@ -1,13 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, Database, MapPinned, Smartphone } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, ArrowUpRight, Camera, ChevronDown, Cross, Database, MapPinned, Radio, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
 import dataImg from "@/assets/data-analysis.jpg";
 import fieldImg from "@/assets/fieldwork-1.jpg";
 import landscape from "@/assets/isiolo-landscape.jpg";
 import gotuIsiolo from "@/assets/gotu-isiolo-visionfund.jpg";
+import faithPurposeMedia from "@/assets/faith-purpose-media-production.png";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
@@ -69,6 +78,9 @@ const projects = [
 ];
 
 function ProjectsPage() {
+  const [isFaithOpen, setIsFaithOpen] = useState(false);
+  const [isEncouragementOpen, setIsEncouragementOpen] = useState(false);
+
   return (
     <PageLayout>
       <section className="section-pad bg-[var(--gradient-soft)]">
@@ -132,6 +144,93 @@ function ProjectsPage() {
           ))}
         </div>
       </section>
+
+      <section className="pb-20">
+        <div className="container-prose">
+          <button
+            type="button"
+            onClick={() => setIsFaithOpen((open) => !open)}
+            className="group relative block w-full overflow-hidden rounded-3xl border border-primary/15 bg-card/70 p-0 text-left shadow-[var(--shadow-elegant)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[var(--shadow-glow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            aria-expanded={isFaithOpen}
+          >
+            <div className="absolute inset-0 opacity-20">
+              <img src={faithPurposeMedia} alt="" aria-hidden="true" className="h-full w-full object-cover" />
+            </div>
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_oklab,var(--primary)_88%,transparent),color-mix(in_oklab,var(--primary-glow)_42%,transparent),color-mix(in_oklab,var(--background)_85%,transparent))]" />
+            <div className="absolute right-8 top-8 h-32 w-px rotate-45 bg-primary-foreground/35 blur-[1px]" />
+            <div className="absolute right-4 top-20 h-px w-36 -rotate-12 bg-primary-foreground/25 blur-[1px]" />
+            <div className="absolute left-8 top-8 hidden h-24 w-24 place-items-center rounded-full border border-primary-foreground/20 bg-primary-foreground/10 text-primary-foreground md:grid animate-float">
+              <Cross className="h-10 w-10" />
+            </div>
+
+            <div className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[0.85fr_1.15fr] lg:p-10">
+              <div className="flex min-h-[220px] flex-col justify-between rounded-2xl border border-primary-foreground/15 bg-primary-foreground/10 p-5 backdrop-blur-md">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/20 bg-primary-foreground/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary-foreground">
+                    <Radio className="h-3.5 w-3.5" /> Faith & Purpose
+                  </div>
+                  <h3 className="mt-5 text-3xl font-extrabold leading-tight text-primary-foreground md:text-4xl">
+                    Serving Through Purpose
+                  </h3>
+                </div>
+                <div className="mt-6 grid grid-cols-3 gap-3 text-primary-foreground/85">
+                  <span className="rounded-xl border border-primary-foreground/15 bg-primary-foreground/10 p-3 text-xs font-semibold">Streams</span>
+                  <span className="rounded-xl border border-primary-foreground/15 bg-primary-foreground/10 p-3 text-xs font-semibold">Cameras</span>
+                  <span className="rounded-xl border border-primary-foreground/15 bg-primary-foreground/10 p-3 text-xs font-semibold">Impact</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col justify-center">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-wide text-primary-foreground/80">Media Production · Gospel Impact</p>
+                    <blockquote className="mt-3 max-w-3xl text-xl font-bold leading-relaxed text-primary-foreground md:text-2xl">
+                      “Go into all the world and preach the gospel to all creation.” – Mark 16:15
+                    </blockquote>
+                  </div>
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-primary-foreground/20 bg-primary-foreground/10 text-primary-foreground transition-transform duration-500 group-hover:scale-110">
+                    <ChevronDown className={`h-5 w-5 transition-transform duration-500 ${isFaithOpen ? "rotate-180" : ""}`} />
+                  </span>
+                </div>
+
+                <div className={`grid transition-all duration-500 ease-out ${isFaithOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+                  <div className="overflow-hidden">
+                    <div className="mt-6 rounded-2xl border border-primary-foreground/15 bg-background/85 p-5 shadow-[var(--shadow-soft)] backdrop-blur-md">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-primary">
+                        <Camera className="h-4 w-4" /> Purpose-driven production
+                      </div>
+                      <p className="mt-3 text-sm leading-7 text-muted-foreground md:text-base">
+                        Through media and technology, we are able to reach lives beyond physical walls. Every stream, every camera angle, and every moment captured is an opportunity to share the message of hope, love, and salvation through Jesus Christ. This work is more than production—it is ministry. Let your gifts shine and be used for a greater purpose.
+                      </p>
+                      <Button
+                        type="button"
+                        className="mt-5"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          setIsEncouragementOpen(true);
+                        }}
+                      >
+                        👉 Follow Christ Today
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <Dialog open={isEncouragementOpen} onOpenChange={setIsEncouragementOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Follow Christ Today</DialogTitle>
+            <DialogDescription>
+              Jesus loves you and has a purpose for your life. Start your journey today.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
 
       <section className="section-pad bg-[var(--gradient-soft)]">
         <div className="container-prose text-center">
