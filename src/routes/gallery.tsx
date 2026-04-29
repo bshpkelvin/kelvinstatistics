@@ -33,7 +33,19 @@ export const Route = createFileRoute("/gallery")({
   component: GalleryPage,
 });
 
-const photos = [
+type Photo = {
+  src: string;
+  alt: string;
+  title: string;
+  caption: string;
+  location: string;
+  description: string;
+  span?: string;
+  priority?: boolean;
+  objectPosition?: string;
+};
+
+const photos: Photo[] = [
   {
     src: professionalProfile,
     alt: "Professional portrait of Kelvin Wambua seated in an office wearing a shirt and tie",
@@ -123,8 +135,6 @@ const photos = [
       "A portrait of Kelvin Wambua during his ongoing professional journey across data collection, monitoring and evaluation, community engagement, and humanitarian-focused assignments.",
   },
 ];
-
-type Photo = (typeof photos)[number];
 
 function GalleryPage() {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
