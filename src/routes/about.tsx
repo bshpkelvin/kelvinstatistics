@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
-import portrait from "@/assets/kelvin-portrait.jpg";
+import portrait from "@/assets/professional-profile-kelvin.png";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -35,7 +35,7 @@ function AboutPage() {
           <div className="lg:col-span-5 animate-scale-in">
             <div className="relative">
               <div className="absolute -inset-4 rounded-3xl bg-[var(--gradient-hero)] opacity-20 blur-2xl" />
-              <img src={portrait} alt="Kelvin Wambua portrait" width={1024} height={1280} className="relative rounded-3xl shadow-[var(--shadow-elegant)] border border-border" />
+              <img src={portrait} alt="Professional portrait of Kelvin Wambua" width={1086} height={1478} className="relative aspect-[4/5] w-full rounded-3xl border border-border object-cover object-[center_28%] shadow-[var(--shadow-elegant)]" />
             </div>
           </div>
           <div className="lg:col-span-7 animate-fade-up">
