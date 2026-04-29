@@ -17,6 +17,7 @@ import community from "@/assets/community-impact.jpg";
 import portrait from "@/assets/kelvin-portrait.jpg";
 import gotuIsiolo from "@/assets/gotu-isiolo-visionfund.jpg";
 import genderWorkshop from "@/assets/gender-inclusion-kcb-workshop.jpg";
+import professionalProfile from "@/assets/professional-profile-kelvin.png";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -33,6 +34,18 @@ export const Route = createFileRoute("/gallery")({
 });
 
 const photos = [
+  {
+    src: professionalProfile,
+    alt: "Professional portrait of Kelvin Wambua seated in an office wearing a shirt and tie",
+    title: "Professional Profile – Kelvin Wambua",
+    caption: "Professional Profile – Kelvin Wambua",
+    location: "Media Production / Portfolio Gallery",
+    description:
+      "A professional portrait representing my role as a Monitoring & Evaluation specialist, data analyst, and media practitioner. This reflects my commitment to excellence, professionalism, and impact-driven work.",
+    span: "md:col-span-2 md:row-span-2",
+    priority: true,
+    objectPosition: "center 28%",
+  },
   {
     src: genderWorkshop,
     alt: "Kelvin Wambua receiving a Certificate of Participation at a Gender Inclusion in Financial Literacy and Disability Inclusion workshop at KCB Leadership Centre",
@@ -136,17 +149,20 @@ function GalleryPage() {
                 key={i}
                 type="button"
                 onClick={() => setSelectedPhoto(p)}
-                className={`group relative overflow-hidden rounded-2xl border border-border hover-lift animate-scale-in ${p.span ?? ""}`}
+                className={`group relative overflow-hidden rounded-2xl border border-border hover-lift animate-scale-in transition-all duration-500 hover:border-primary/35 hover:shadow-[var(--shadow-glow)] ${p.span ?? ""}`}
                 style={{ animationDelay: `${i * 0.06}s` }}
                 aria-label={`View more information about ${p.title}`}
               >
                 <img
                   src={p.src}
                   alt={p.alt}
-                  loading="lazy"
+                  loading={p.priority ? "eager" : "lazy"}
+                  decoding="async"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  style={{ objectPosition: p.objectPosition ?? "center" }}
                 />
-                <span className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-primary/90 to-transparent text-left text-primary-foreground opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
+                <span className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-90 transition-opacity group-hover:opacity-100" />
+                <span className="absolute inset-x-0 bottom-0 p-4 text-left text-primary-foreground opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
                   <span className="block text-sm font-semibold">{p.caption}</span>
                   <span className="mt-1 block text-xs text-primary-foreground/85">Tap to read more</span>
                 </span>
@@ -158,11 +174,12 @@ function GalleryPage() {
 
       <Dialog open={Boolean(selectedPhoto)} onOpenChange={(open) => !open && setSelectedPhoto(null)}>
         {selectedPhoto && (
-          <DialogContent className="max-h-[92vh] overflow-y-auto p-0 sm:max-w-3xl">
+          <DialogContent className="max-h-[96vh] overflow-y-auto p-0 sm:max-w-[min(94vw,72rem)]">
             <img
               src={selectedPhoto.src}
               alt={selectedPhoto.alt}
-              className="aspect-[4/3] w-full rounded-t-lg object-cover sm:aspect-[16/9]"
+              className="max-h-[72vh] w-full rounded-t-lg object-cover"
+              style={{ objectPosition: selectedPhoto.objectPosition ?? "center" }}
             />
             <div className="p-6">
               <DialogHeader>
