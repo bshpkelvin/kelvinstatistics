@@ -5,7 +5,6 @@ import { Card } from "@/components/ui/card";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
 import portrait from "@/assets/kelvin-portrait.webp";
-import professionalProfile from "@/assets/professional-profile-kelvin.png";
 import dataImg from "@/assets/data-analysis.jpg";
 import fieldImg from "@/assets/fieldwork-1.jpg";
 
@@ -69,7 +68,6 @@ function HomePage() {
         <div className="relative container-prose pt-12 md:pt-20 pb-20 md:pb-28 grid lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7 animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold tracking-wide uppercase text-accent">
-              <img src={professionalProfile} alt="Kelvin Wambua" width={28} height={28} className="-ml-2 h-7 w-7 rounded-full border border-accent/30 object-cover object-[center_28%]" />
               <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
               Available for Consulting
             </span>
