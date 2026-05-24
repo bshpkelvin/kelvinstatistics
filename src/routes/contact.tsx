@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { Linkedin, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -10,6 +11,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
+import { sendContactEmail } from "@/lib/contact.functions";
+
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
