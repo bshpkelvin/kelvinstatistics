@@ -35,10 +35,12 @@ const contactSchema = z.object({
 
 function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
+  const sendEmail = useServerFn(sendContactEmail);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const result = contactSchema.safeParse({
       name: fd.get("name"),
       email: fd.get("email"),
@@ -50,12 +52,18 @@ function ContactPage() {
       return;
     }
     setSubmitting(true);
-    setTimeout(() => {
+    try {
+      await sendEmail({ data: result.data });
       toast.success("Thanks! Your message has been sent. I'll reply within 24 hours.");
-      (e.target as HTMLFormElement).reset();
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      toast.error("Couldn't send right now. Please email bshpkelvin@gmail.com directly.");
+    } finally {
       setSubmitting(false);
-    }, 800);
+    }
   };
+
 
   return (
     <PageLayout>
