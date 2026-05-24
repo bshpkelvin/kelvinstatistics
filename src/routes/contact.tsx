@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { Linkedin, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -10,6 +11,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
+import { sendContactEmail } from "@/lib/contact.functions";
+
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -32,10 +35,12 @@ const contactSchema = z.object({
 
 function ContactPage() {
   const [submitting, setSubmitting] = useState(false);
+  const sendEmail = useServerFn(sendContactEmail);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const result = contactSchema.safeParse({
       name: fd.get("name"),
       email: fd.get("email"),
@@ -47,12 +52,18 @@ function ContactPage() {
       return;
     }
     setSubmitting(true);
-    setTimeout(() => {
+    try {
+      await sendEmail({ data: result.data });
       toast.success("Thanks! Your message has been sent. I'll reply within 24 hours.");
-      (e.target as HTMLFormElement).reset();
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      toast.error("Couldn't send right now. Please email bshpkelvin@gmail.com directly.");
+    } finally {
       setSubmitting(false);
-    }, 800);
+    }
   };
+
 
   return (
     <PageLayout>
