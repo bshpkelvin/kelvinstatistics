@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
+import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { TrustedBy } from "@/components/TrustedBy";
+import { KenyaMap } from "@/components/KenyaMap";
 import portrait from "@/assets/kelvin-portrait.webp";
 import dataImg from "@/assets/data-analysis.jpg";
 import fieldImg from "@/assets/fieldwork-1.jpg";
@@ -24,10 +27,10 @@ export const Route = createFileRoute("/")({
 });
 
 const stats = [
-  { label: "Communities Reached", value: "20+", icon: MapPin },
-  { label: "Surveys Conducted", value: "5K+", icon: BarChart3 },
-  { label: "Children Supported", value: "156+", icon: Heart },
-  { label: "Funds Mobilized", value: "$10K+", icon: Sparkles },
+  { label: "Communities Reached", value: 20, suffix: "+", icon: MapPin },
+  { label: "Surveys Conducted", value: 5000, suffix: "+", icon: BarChart3, formatK: true },
+  { label: "Children Supported", value: 156, suffix: "+", icon: Heart },
+  { label: "Funds Mobilized", value: 10, prefix: "$", suffix: "K+", icon: Sparkles },
 ];
 
 const skillGroups = [
@@ -102,7 +105,15 @@ function HomePage() {
               {stats.map((s) => (
                 <div key={s.label} className="rounded-xl border border-border bg-card/50 backdrop-blur p-4 hover-lift">
                   <s.icon className="h-5 w-5 text-accent" />
-                  <p className="mt-2 text-2xl font-bold text-foreground">{s.value}</p>
+                  <p className="mt-2 text-2xl font-bold text-foreground">
+                    {s.formatK ? (
+                      <>
+                        <AnimatedCounter end={5} suffix="K+" />
+                      </>
+                    ) : (
+                      <AnimatedCounter end={s.value as number} prefix={s.prefix} suffix={s.suffix} />
+                    )}
+                  </p>
                   <p className="text-xs text-muted-foreground">{s.label}</p>
                 </div>
               ))}
