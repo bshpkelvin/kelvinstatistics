@@ -32,7 +32,18 @@ export const Route = createFileRoute("/projects")({
   component: ProjectsPage,
 });
 
-const projects = [
+type Category = "All" | "M&E" | "Data Analysis" | "Community" | "Media";
+
+const projects: Array<{
+  icon: typeof Database;
+  title: string;
+  client: string;
+  image: string;
+  description: string;
+  tools: string[];
+  outcomes: string[];
+  category: Exclude<Category, "All">;
+}> = [
   {
     icon: Database,
     title: "Loan Distribution Survey Analysis",
@@ -46,6 +57,7 @@ const projects = [
       "Identified 3 program adjustments adopted by management",
       "Translated field insights into data-driven decision-making",
     ],
+    category: "Data Analysis",
   },
   {
     icon: MapPinned,
@@ -60,6 +72,7 @@ const projects = [
       "Built case-management ready dataset",
       "Strengthened referral pathways with local partners",
     ],
+    category: "M&E",
   },
   {
     icon: Smartphone,
@@ -74,12 +87,18 @@ const projects = [
       "Trained 25+ field enumerators",
       "Reduced data entry errors to <2%",
     ],
+    category: "M&E",
   },
 ];
+
+const categories: Category[] = ["All", "M&E", "Data Analysis", "Community", "Media"];
 
 function ProjectsPage() {
   const [isFaithOpen, setIsFaithOpen] = useState(false);
   const [isEncouragementOpen, setIsEncouragementOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<Category>("All");
+
+  const filtered = activeCategory === "All" ? projects : projects.filter((p) => p.category === activeCategory);
 
   return (
     <PageLayout>
