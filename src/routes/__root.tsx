@@ -65,11 +65,42 @@ export const Route = createRootRoute({
   notFoundComponent: NotFoundComponent,
 });
 
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Kelvin Wambua",
+  jobTitle: "Monitoring & Evaluation Specialist & Data Analyst",
+  description: "M&E specialist, data analyst, and humanitarian practitioner based in Nairobi, Kenya.",
+  url: "https://kelvinstatistics.lovable.app",
+  address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "Rongo University" },
+  worksFor: { "@type": "Organization", name: "Hope for Kibera" },
+  knowsAbout: ["Monitoring and Evaluation", "Data Analysis", "ODK Collect", "KoboToolbox", "Power BI", "R", "Statistics"],
+  sameAs: ["https://kelvinstatistics.lovable.app"],
+};
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Hope for Kibera",
+  description: "Community-based NGO supporting vulnerable children and families in Kibera, Nairobi.",
+  founder: { "@type": "Person", name: "Kelvin Wambua" },
+  address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
+};
+
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
       </head>
       <body>
         {children}
