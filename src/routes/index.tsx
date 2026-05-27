@@ -152,6 +152,22 @@ function HomePage() {
         </div>
       </section>
 
+      <TrustedBy />
+
+      {/* FIELDWORK MAP */}
+      <section className="section-pad">
+        <div className="container-prose">
+          <SectionHeading
+            eyebrow="Field Footprint"
+            title={<>Where the <span className="gradient-text">work happens</span></>}
+            description="From coastal Kilifi to arid Isiolo — data collection across Kenya's most underserved counties."
+          />
+          <div className="mt-12">
+            <KenyaMap />
+          </div>
+        </div>
+      </section>
+
       {/* ABOUT */}
       <section id="about" className="section-pad">
         <div className="container-prose grid lg:grid-cols-12 gap-12 items-center">
