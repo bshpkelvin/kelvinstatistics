@@ -32,7 +32,18 @@ export const Route = createFileRoute("/projects")({
   component: ProjectsPage,
 });
 
-const projects = [
+type Category = "All" | "M&E" | "Data Analysis" | "Community" | "Media";
+
+const projects: Array<{
+  icon: typeof Database;
+  title: string;
+  client: string;
+  image: string;
+  description: string;
+  tools: string[];
+  outcomes: string[];
+  category: Exclude<Category, "All">;
+}> = [
   {
     icon: Database,
     title: "Loan Distribution Survey Analysis",
@@ -46,6 +57,7 @@ const projects = [
       "Identified 3 program adjustments adopted by management",
       "Translated field insights into data-driven decision-making",
     ],
+    category: "Data Analysis",
   },
   {
     icon: MapPinned,
@@ -60,6 +72,7 @@ const projects = [
       "Built case-management ready dataset",
       "Strengthened referral pathways with local partners",
     ],
+    category: "M&E",
   },
   {
     icon: Smartphone,
@@ -74,12 +87,18 @@ const projects = [
       "Trained 25+ field enumerators",
       "Reduced data entry errors to <2%",
     ],
+    category: "M&E",
   },
 ];
+
+const categories: Category[] = ["All", "M&E", "Data Analysis", "Community", "Media"];
 
 function ProjectsPage() {
   const [isFaithOpen, setIsFaithOpen] = useState(false);
   const [isEncouragementOpen, setIsEncouragementOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<Category>("All");
+
+  const filtered = activeCategory === "All" ? projects : projects.filter((p) => p.category === activeCategory);
 
   return (
     <PageLayout>
@@ -90,12 +109,30 @@ function ProjectsPage() {
             title={<>Projects that turned data into <span className="gradient-text">decisions</span></>}
             description="A selection of M&E and data analysis assignments delivered across Kenya's humanitarian and development sector."
           />
+          <div className="mt-8 flex flex-wrap justify-center gap-2">
+            {categories.map((c) => (
+              <button
+                key={c}
+                onClick={() => setActiveCategory(c)}
+                className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all ${
+                  activeCategory === c
+                    ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow-soft)]"
+                    : "bg-card text-foreground/70 border-border hover:border-primary/50 hover:text-foreground"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
       <section className="pb-20">
         <div className="container-prose space-y-12">
-          {projects.map((p, i) => (
+          {filtered.length === 0 && (
+            <p className="text-center text-muted-foreground py-12">No projects in this category yet.</p>
+          )}
+          {filtered.map((p, i) => (
             <Card
               key={p.title}
               className="overflow-hidden border-border hover-lift animate-fade-up"
@@ -145,7 +182,58 @@ function ProjectsPage() {
         </div>
       </section>
 
-      <section className="pb-20">
+      {/* BEFORE / AFTER DATA VIZ */}
+      <section className="section-pad bg-[var(--gradient-soft)]">
+        <div className="container-prose">
+          <SectionHeading
+            eyebrow="Process"
+            title={<>From raw data to <span className="gradient-text">decisions</span></>}
+            description="How messy field data becomes evidence stakeholders trust."
+          />
+          <div className="mt-12 grid md:grid-cols-3 gap-6">
+            <Card className="p-6 border-border hover-lift">
+              <div className="inline-flex items-center rounded-full bg-destructive/10 px-3 py-1 text-xs font-semibold text-destructive">Step 1 · Raw</div>
+              <h4 className="mt-4 font-bold text-foreground">Field data</h4>
+              <pre className="mt-3 text-[10px] leading-tight bg-muted rounded-lg p-3 overflow-hidden text-muted-foreground font-mono">
+{`hh_id,name,age,inc
+001,J.Doe,34,12K
+002,,,
+003,M.W,29,N/A
+004,A.K,41,8500
+...800 rows`}
+              </pre>
+              <p className="mt-3 text-xs text-muted-foreground">Inconsistent formats, missing values, free-text entries from 25 enumerators.</p>
+            </Card>
+            <Card className="p-6 border-border hover-lift">
+              <div className="inline-flex items-center rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold text-accent">Step 2 · Cleaned</div>
+              <h4 className="mt-4 font-bold text-foreground">Validated dataset</h4>
+              <pre className="mt-3 text-[10px] leading-tight bg-muted rounded-lg p-3 overflow-hidden text-muted-foreground font-mono">
+{`hh_id,name,age,income_kes
+001,John Doe,34,12000
+002,Mary A,28,9500
+003,Mark W,29,7800
+004,Alice K,41,8500
+...validated`}
+              </pre>
+              <p className="mt-3 text-xs text-muted-foreground">Deduplicated, type-cast, currency normalized, missing values imputed in R.</p>
+            </Card>
+            <Card className="p-6 border-border hover-lift">
+              <div className="inline-flex items-center rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">Step 3 · Insight</div>
+              <h4 className="mt-4 font-bold text-foreground">Dashboard</h4>
+              <div className="mt-3 bg-muted rounded-lg p-4 h-[126px] flex items-end gap-2">
+                <div className="flex-1 bg-gradient-to-t from-primary to-primary-glow rounded-t" style={{ height: "40%" }} />
+                <div className="flex-1 bg-gradient-to-t from-primary to-primary-glow rounded-t" style={{ height: "65%" }} />
+                <div className="flex-1 bg-gradient-to-t from-accent to-primary-glow rounded-t" style={{ height: "85%" }} />
+                <div className="flex-1 bg-gradient-to-t from-primary to-primary-glow rounded-t" style={{ height: "55%" }} />
+                <div className="flex-1 bg-gradient-to-t from-primary to-primary-glow rounded-t" style={{ height: "72%" }} />
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground">Power BI dashboard shared with program managers for live decisions.</p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-20 pt-20">
         <div className="container-prose">
           <div
             role="button"
