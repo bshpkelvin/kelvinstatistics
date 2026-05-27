@@ -109,12 +109,30 @@ function ProjectsPage() {
             title={<>Projects that turned data into <span className="gradient-text">decisions</span></>}
             description="A selection of M&E and data analysis assignments delivered across Kenya's humanitarian and development sector."
           />
+          <div className="mt-8 flex flex-wrap justify-center gap-2">
+            {categories.map((c) => (
+              <button
+                key={c}
+                onClick={() => setActiveCategory(c)}
+                className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all ${
+                  activeCategory === c
+                    ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow-soft)]"
+                    : "bg-card text-foreground/70 border-border hover:border-primary/50 hover:text-foreground"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
       <section className="pb-20">
         <div className="container-prose space-y-12">
-          {projects.map((p, i) => (
+          {filtered.length === 0 && (
+            <p className="text-center text-muted-foreground py-12">No projects in this category yet.</p>
+          )}
+          {filtered.map((p, i) => (
             <Card
               key={p.title}
               className="overflow-hidden border-border hover-lift animate-fade-up"
