@@ -90,33 +90,37 @@ export function Header() {
       <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
         <SheetContent
           side="left"
-          className="w-[88vw] sm:max-w-md p-0 border-r border-border bg-background/95 backdrop-blur-xl"
+          className="w-[88vw] sm:max-w-md p-0 border-r border-white/10 bg-slate-950/70 dark:bg-slate-950/75 backdrop-blur-md text-white [&>button.absolute]:hidden"
         >
-          <div className="flex flex-col h-full">
-            <SheetHeader className="px-6 pt-6 pb-4 flex-row items-center justify-between space-y-0">
+          {/* Ambient glow accents */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute -top-24 -left-16 h-64 w-64 rounded-full bg-sky-500/20 blur-3xl" />
+            <div className="absolute bottom-0 -right-20 h-72 w-72 rounded-full bg-indigo-500/15 blur-3xl" />
+          </div>
+
+          <div className="relative flex flex-col h-full">
+            <SheetHeader className="px-6 pt-6 pb-5 flex-row items-center justify-between space-y-0 border-b border-white/10">
               <div className="text-left">
-                <SheetTitle className="text-base font-semibold tracking-tight">
+                <SheetTitle className="text-lg font-semibold tracking-tight text-white">
                   Navigate
                 </SheetTitle>
-                <SheetDescription className="text-xs">
+                <SheetDescription className="text-xs text-white/50">
                   Explore the portfolio
                 </SheetDescription>
               </div>
               <SheetClose asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-1.5 rounded-full hover:bg-muted hover:gap-2 transition-all group"
+                <button
                   aria-label="Close menu"
+                  className="group inline-flex items-center gap-1.5 rounded-full bg-white/10 hover:bg-white/20 px-3 py-1.5 text-xs font-medium text-white/90 hover:text-white transition-all duration-200 hover:shadow-[0_0_20px_rgba(125,211,252,0.35)] backdrop-blur-sm"
                 >
-                  <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-                  <span className="text-xs font-medium">Back</span>
-                </Button>
+                  <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
+                  <span>Back</span>
+                </button>
               </SheetClose>
             </SheetHeader>
 
-            <nav className="flex-1 overflow-y-auto px-4 pb-6">
-              <ul className="flex flex-col gap-1">
+            <nav className="flex-1 overflow-y-auto px-4 py-4">
+              <ul className="flex flex-col">
                 {navItems.map((item, idx) => {
                   const active =
                     item.to === "/"
@@ -125,33 +129,36 @@ export function Header() {
                   return (
                     <li
                       key={item.to}
-                      className="animate-fade-up"
-                      style={{ animationDelay: `${60 + idx * 35}ms` }}
+                      className="opacity-0 animate-fade-up border-b border-white/5 last:border-b-0"
+                      style={{
+                        animationDelay: `${80 + idx * 55}ms`,
+                        animationFillMode: "forwards",
+                      }}
                     >
                       <Link
                         to={item.to}
                         className={cn(
-                          "group relative flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300 overflow-hidden",
+                          "group relative flex items-center justify-between px-3 py-4 text-[15px] font-medium transition-all duration-200 transform hover:translate-x-1",
                           active
-                            ? "bg-[var(--gradient-hero)] text-primary-foreground shadow-[var(--shadow-soft)]"
-                            : "text-foreground/80 hover:text-foreground hover:bg-muted hover:translate-x-1",
+                            ? "text-sky-400"
+                            : "text-white/70 hover:text-sky-300",
                         )}
                       >
-                        <span className="relative z-10 flex items-center gap-3">
+                        <span className="relative">
+                          {item.label}
                           <span
                             className={cn(
-                              "h-1.5 w-1.5 rounded-full transition-all duration-300",
-                              active
-                                ? "bg-primary-foreground scale-110"
-                                : "bg-muted-foreground/40 group-hover:bg-accent group-hover:scale-125",
+                              "absolute -bottom-1 left-0 h-px bg-gradient-to-r from-sky-400 to-transparent transition-all duration-300",
+                              active ? "w-10" : "w-0 group-hover:w-8",
                             )}
                           />
-                          {item.label}
                         </span>
                         <span
                           className={cn(
-                            "text-xs opacity-0 -translate-x-2 transition-all duration-300",
-                            !active && "group-hover:opacity-60 group-hover:translate-x-0",
+                            "text-sky-400 text-sm opacity-0 -translate-x-2 transition-all duration-200",
+                            active
+                              ? "opacity-100 translate-x-0"
+                              : "group-hover:opacity-70 group-hover:translate-x-0",
                           )}
                         >
                           →
@@ -163,12 +170,16 @@ export function Header() {
               </ul>
             </nav>
 
-            <div className="px-6 py-5 border-t border-border">
-              <Button asChild className="w-full rounded-full" size="lg">
+            <div className="px-6 py-5 border-t border-white/10">
+              <Button
+                asChild
+                size="lg"
+                className="w-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-400 hover:to-indigo-400 text-white shadow-lg shadow-sky-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-sky-400/40"
+              >
                 <Link to="/contact">Hire Me</Link>
               </Button>
-              <p className="mt-3 text-center text-[11px] text-muted-foreground">
-                Kelvin Wambua · M&E · Data · Impact
+              <p className="mt-3 text-center text-[10px] tracking-wide text-white/40">
+                Kelvin Wambua • M&E • Data • Impact
               </p>
             </div>
           </div>
