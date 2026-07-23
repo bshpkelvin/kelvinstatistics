@@ -13,10 +13,12 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as NgoRouteImport } from './routes/ngo'
 import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as GuestbookRouteImport } from './routes/guestbook'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CertificationsRouteImport } from './routes/certifications'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -40,6 +42,11 @@ const InsightsRoute = InsightsRouteImport.update({
   path: '/insights',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuestbookRoute = GuestbookRouteImport.update({
+  id: '/guestbook',
+  path: '/guestbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
@@ -60,6 +67,11 @@ const CertificationsRoute = CertificationsRouteImport.update({
   path: '/certifications',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -74,10 +86,12 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/certifications': typeof CertificationsRoute
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/gallery': typeof GalleryRoute
+  '/guestbook': typeof GuestbookRoute
   '/insights': typeof InsightsRoute
   '/ngo': typeof NgoRoute
   '/projects': typeof ProjectsRoute
@@ -86,10 +100,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/certifications': typeof CertificationsRoute
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/gallery': typeof GalleryRoute
+  '/guestbook': typeof GuestbookRoute
   '/insights': typeof InsightsRoute
   '/ngo': typeof NgoRoute
   '/projects': typeof ProjectsRoute
@@ -99,10 +115,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/certifications': typeof CertificationsRoute
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/gallery': typeof GalleryRoute
+  '/guestbook': typeof GuestbookRoute
   '/insights': typeof InsightsRoute
   '/ngo': typeof NgoRoute
   '/projects': typeof ProjectsRoute
@@ -113,10 +131,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/certifications'
     | '/contact'
     | '/experience'
     | '/gallery'
+    | '/guestbook'
     | '/insights'
     | '/ngo'
     | '/projects'
@@ -125,10 +145,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/admin'
     | '/certifications'
     | '/contact'
     | '/experience'
     | '/gallery'
+    | '/guestbook'
     | '/insights'
     | '/ngo'
     | '/projects'
@@ -137,10 +159,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/certifications'
     | '/contact'
     | '/experience'
     | '/gallery'
+    | '/guestbook'
     | '/insights'
     | '/ngo'
     | '/projects'
@@ -150,10 +174,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
   CertificationsRoute: typeof CertificationsRoute
   ContactRoute: typeof ContactRoute
   ExperienceRoute: typeof ExperienceRoute
   GalleryRoute: typeof GalleryRoute
+  GuestbookRoute: typeof GuestbookRoute
   InsightsRoute: typeof InsightsRoute
   NgoRoute: typeof NgoRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -190,6 +216,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InsightsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guestbook': {
+      id: '/guestbook'
+      path: '/guestbook'
+      fullPath: '/guestbook'
+      preLoaderRoute: typeof GuestbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gallery': {
       id: '/gallery'
       path: '/gallery'
@@ -218,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CertificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -238,10 +278,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
   CertificationsRoute: CertificationsRoute,
   ContactRoute: ContactRoute,
   ExperienceRoute: ExperienceRoute,
   GalleryRoute: GalleryRoute,
+  GuestbookRoute: GuestbookRoute,
   InsightsRoute: InsightsRoute,
   NgoRoute: NgoRoute,
   ProjectsRoute: ProjectsRoute,
