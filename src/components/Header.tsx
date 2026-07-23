@@ -23,6 +23,7 @@ const navItems = [
   { to: "/certifications", label: "Certifications" },
   { to: "/ngo", label: "Hope for Kibera" },
   { to: "/gallery", label: "Gallery" },
+  { to: "/guestbook", label: "Guestbook" },
   { to: "/contact", label: "Contact" },
 ] as const;
 

@@ -13,6 +13,7 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as NgoRouteImport } from './routes/ngo'
 import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as GuestbookRouteImport } from './routes/guestbook'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -38,6 +39,11 @@ const NgoRoute = NgoRouteImport.update({
 const InsightsRoute = InsightsRouteImport.update({
   id: '/insights',
   path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuestbookRoute = GuestbookRouteImport.update({
+  id: '/guestbook',
+  path: '/guestbook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/gallery': typeof GalleryRoute
+  '/guestbook': typeof GuestbookRoute
   '/insights': typeof InsightsRoute
   '/ngo': typeof NgoRoute
   '/projects': typeof ProjectsRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/gallery': typeof GalleryRoute
+  '/guestbook': typeof GuestbookRoute
   '/insights': typeof InsightsRoute
   '/ngo': typeof NgoRoute
   '/projects': typeof ProjectsRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/gallery': typeof GalleryRoute
+  '/guestbook': typeof GuestbookRoute
   '/insights': typeof InsightsRoute
   '/ngo': typeof NgoRoute
   '/projects': typeof ProjectsRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/gallery'
+    | '/guestbook'
     | '/insights'
     | '/ngo'
     | '/projects'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/gallery'
+    | '/guestbook'
     | '/insights'
     | '/ngo'
     | '/projects'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/gallery'
+    | '/guestbook'
     | '/insights'
     | '/ngo'
     | '/projects'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ExperienceRoute: typeof ExperienceRoute
   GalleryRoute: typeof GalleryRoute
+  GuestbookRoute: typeof GuestbookRoute
   InsightsRoute: typeof InsightsRoute
   NgoRoute: typeof NgoRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -188,6 +201,13 @@ declare module '@tanstack/react-router' {
       path: '/insights'
       fullPath: '/insights'
       preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guestbook': {
+      id: '/guestbook'
+      path: '/guestbook'
+      fullPath: '/guestbook'
+      preLoaderRoute: typeof GuestbookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ExperienceRoute: ExperienceRoute,
   GalleryRoute: GalleryRoute,
+  GuestbookRoute: GuestbookRoute,
   InsightsRoute: InsightsRoute,
   NgoRoute: NgoRoute,
   ProjectsRoute: ProjectsRoute,
