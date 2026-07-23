@@ -110,7 +110,7 @@ export const adminUpdateComment = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     await requireAdmin();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const patch: Record<string, unknown> = {};
+    const patch: { reply_text?: string | null; is_visible?: boolean } = {};
     if (data.reply_text !== undefined) patch.reply_text = data.reply_text || null;
     if (data.is_visible !== undefined) patch.is_visible = data.is_visible;
     const { error } = await supabaseAdmin.from("comments").update(patch).eq("id", data.id);
