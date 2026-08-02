@@ -129,7 +129,7 @@ function ProjectsPage() {
 
       <section className="pb-20">
         <div className="container-prose space-y-12">
-          {filtered.length === 0 && (
+          {filtered.length === 0 && activeCategory !== "Media" && (
             <p className="text-center text-muted-foreground py-12">No projects in this category yet.</p>
           )}
           {filtered.map((p, i) => (
@@ -183,7 +183,7 @@ function ProjectsPage() {
       </section>
 
       {/* BEFORE / AFTER DATA VIZ */}
-      <section className="section-pad bg-[var(--gradient-soft)]">
+      <section className={`section-pad bg-[var(--gradient-soft)] ${activeCategory === "Media" ? "hidden" : ""}`}>
         <div className="container-prose">
           <SectionHeading
             eyebrow="Process"
@@ -233,7 +233,7 @@ function ProjectsPage() {
         </div>
       </section>
 
-      <section className="pb-20 pt-20">
+      <section className={`pb-20 pt-20 ${activeCategory === "All" || activeCategory === "Media" ? "" : "hidden"}`}>
         <div className="container-prose">
           <div
             role="button"
