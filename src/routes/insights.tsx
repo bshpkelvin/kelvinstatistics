@@ -1,79 +1,112 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { useEffect, useState } from "react";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
+import { listPublishedArticles } from "@/lib/articles.functions";
 
 export const Route = createFileRoute("/insights")({
   head: () => ({
     meta: [
-      { title: "Insights & Publications — Kelvin Wambua | M&E Field Notes" },
-      { name: "description", content: "Field notes and lessons from Monitoring & Evaluation work across Kenya — mobile data collection, MVC mapping, and turning data into program decisions." },
-      { property: "og:title", content: "Insights — Kelvin Wambua" },
-      { property: "og:description", content: "Field notes on M&E, mobile data collection, and humanitarian analytics." },
+      { title: "Articles & Field Notes — Kelvin Wambua" },
+      { name: "description", content: "Read articles by Kelvin Wambua on monitoring and evaluation, field research, data, and community impact in Kenya." },
+      { property: "og:title", content: "Articles & Field Notes — Kelvin Wambua" },
+      { property: "og:description", content: "Articles on monitoring and evaluation, field research, data, and community impact in Kenya." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: InsightsPage,
 });
 
-const posts = [
-  {
-    slug: "mapping-800-mvc-kilifi",
-    title: "5 Lessons from Mapping 800+ Vulnerable Children in Kilifi",
-    excerpt: "Lessons learned from a large-scale household profiling exercise: enumerator training, data quality, and the human side of geospatial fieldwork.",
-    date: "Mar 2025",
-    readTime: "6 min read",
-    category: "Field Notes",
-  },
-  {
-    slug: "odk-vs-kobo",
-    title: "ODK vs KoboToolbox: Choosing the Right Mobile Data Tool",
-    excerpt: "A practical comparison from real deployments in Isiolo and Kilifi — when to pick each, common pitfalls, and form design tips that save weeks.",
-    date: "Feb 2025",
-    readTime: "8 min read",
-    category: "Tools",
-  },
-  {
-    slug: "data-to-decisions",
-    title: "From Raw Data to Decisions: An M&E Workflow That Works",
-    excerpt: "How I structure analysis pipelines so that survey data becomes evidence stakeholders actually use — with templates, checklists, and a real case study.",
-    date: "Jan 2025",
-    readTime: "10 min read",
-    category: "Methodology",
-  },
-];
+type ArticleSummary = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  category: string;
+  created_at: string;
+  published_at: string | null;
+};
 
 function InsightsPage() {
+  const list = useServerFn(listPublishedArticles);
+  const [articles, setArticles] = useState<ArticleSummary[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    list()
+      .then((items) => {
+        if (active) setArticles(items as ArticleSummary[]);
+      })
+      .catch(() => {
+        if (active) setFailed(true);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [list]);
+
   return (
     <PageLayout>
       <section className="section-pad bg-[var(--gradient-soft)]">
         <div className="container-prose">
           <SectionHeading
-            eyebrow="Insights & Publications"
-            title={<>Field notes from <span className="gradient-text">the M&E frontline</span></>}
-            description="Lessons, methodologies and reflections from data work across Kenya's humanitarian sector."
+            eyebrow="Articles & Field Notes"
+            title={<>Ideas from the <span className="gradient-text">field</span></>}
+            description="Writing on monitoring and evaluation, research, data, and community impact across Kenya."
           />
         </div>
       </section>
 
       <section className="pb-20">
-        <div className="container-prose grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map((p, i) => (
-            <Card key={p.slug} className="p-6 hover-lift border-border animate-fade-up flex flex-col" style={{ animationDelay: `${i * 0.1}s` }}>
-              <span className="inline-flex w-fit items-center rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold text-accent">
-                {p.category}
-              </span>
-              <h3 className="mt-4 text-xl font-bold text-foreground leading-snug">{p.title}</h3>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed flex-1">{p.excerpt}</p>
-              <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
-                <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {p.date}</span>
-                <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" /> {p.readTime}</span>
-              </div>
-              <Link to="/contact" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">
-                Request full article <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Card>
-          ))}
+        <div className="container-prose max-w-5xl">
+          {loading ? (
+            <p className="py-8 text-center text-sm text-muted-foreground">Loading articles…</p>
+          ) : failed ? (
+            <p className="py-8 text-center text-sm text-muted-foreground">Articles are unavailable right now. Please try again later.</p>
+          ) : articles.length === 0 ? (
+            <div className="mx-auto max-w-xl border-y border-border py-12 text-center">
+              <h2 className="text-2xl font-bold text-foreground">New writing is on its way</h2>
+              <p className="mt-3 leading-relaxed text-muted-foreground">Articles and field notes will appear here as they are published.</p>
+            </div>
+          ) : (
+            <ul className="divide-y divide-border border-y border-border">
+              {articles.map((article) => {
+                const publishedDate = article.published_at ?? article.created_at;
+                const wordCount = article.excerpt.trim().split(/\s+/).filter(Boolean).length;
+                const readMinutes = Math.max(1, Math.ceil(wordCount / 220));
+                return (
+                  <li key={article.id} className="py-7 md:py-9">
+                    <article className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-8">
+                      <div>
+                        <span className="text-xs font-semibold uppercase text-accent">{article.category}</span>
+                        <h2 className="mt-2 text-2xl font-bold leading-snug text-foreground md:text-3xl">
+                          <Link to="/insights/$slug" params={{ slug: article.slug }} className="transition-colors hover:text-primary">
+                            {article.title}
+                          </Link>
+                        </h2>
+                        {article.excerpt && <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">{article.excerpt}</p>}
+                        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-foreground">
+                          <span className="inline-flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" />{new Intl.DateTimeFormat("en-KE", { dateStyle: "medium", timeZone: "UTC" }).format(new Date(publishedDate))}</span>
+                          <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" />{readMinutes} min read</span>
+                        </div>
+                      </div>
+                      <Link to="/insights/$slug" params={{ slug: article.slug }} aria-label={`Read ${article.title}`} className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-primary">
+                        Read article <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </article>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       </section>
     </PageLayout>

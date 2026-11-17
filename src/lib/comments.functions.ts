@@ -27,7 +27,7 @@ function passwordMatches(input: string, expected: string) {
   return timingSafeEqual(a, b);
 }
 
-async function requireAdmin() {
+export async function requireAdmin() {
   const session = await useSession<AdminSession>(sessionConfig());
   if (!session.data.isAdmin) throw new Error("Unauthorized");
   return session;

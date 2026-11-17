@@ -21,6 +21,7 @@ import { Route as CertificationsRouteImport } from './routes/certifications'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
 
 const ToolsRoute = ToolsRouteImport.update({
   id: '/tools',
@@ -82,6 +83,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InsightsSlugRoute = InsightsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => InsightsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -92,10 +98,11 @@ export interface FileRoutesByFullPath {
   '/experience': typeof ExperienceRoute
   '/gallery': typeof GalleryRoute
   '/guestbook': typeof GuestbookRoute
-  '/insights': typeof InsightsRoute
+  '/insights': typeof InsightsRouteWithChildren
   '/ngo': typeof NgoRoute
   '/projects': typeof ProjectsRoute
   '/tools': typeof ToolsRoute
+  '/insights/$slug': typeof InsightsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -106,10 +113,11 @@ export interface FileRoutesByTo {
   '/experience': typeof ExperienceRoute
   '/gallery': typeof GalleryRoute
   '/guestbook': typeof GuestbookRoute
-  '/insights': typeof InsightsRoute
+  '/insights': typeof InsightsRouteWithChildren
   '/ngo': typeof NgoRoute
   '/projects': typeof ProjectsRoute
   '/tools': typeof ToolsRoute
+  '/insights/$slug': typeof InsightsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -121,10 +129,11 @@ export interface FileRoutesById {
   '/experience': typeof ExperienceRoute
   '/gallery': typeof GalleryRoute
   '/guestbook': typeof GuestbookRoute
-  '/insights': typeof InsightsRoute
+  '/insights': typeof InsightsRouteWithChildren
   '/ngo': typeof NgoRoute
   '/projects': typeof ProjectsRoute
   '/tools': typeof ToolsRoute
+  '/insights/$slug': typeof InsightsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/ngo'
     | '/projects'
     | '/tools'
+    | '/insights/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/ngo'
     | '/projects'
     | '/tools'
+    | '/insights/$slug'
   id:
     | '__root__'
     | '/'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/ngo'
     | '/projects'
     | '/tools'
+    | '/insights/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -180,7 +192,7 @@ export interface RootRouteChildren {
   ExperienceRoute: typeof ExperienceRoute
   GalleryRoute: typeof GalleryRoute
   GuestbookRoute: typeof GuestbookRoute
-  InsightsRoute: typeof InsightsRoute
+  InsightsRoute: typeof InsightsRouteWithChildren
   NgoRoute: typeof NgoRoute
   ProjectsRoute: typeof ProjectsRoute
   ToolsRoute: typeof ToolsRoute
@@ -272,8 +284,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/insights/$slug': {
+      id: '/insights/$slug'
+      path: '/$slug'
+      fullPath: '/insights/$slug'
+      preLoaderRoute: typeof InsightsSlugRouteImport
+      parentRoute: typeof InsightsRoute
+    }
   }
 }
+
+interface InsightsRouteChildren {
+  InsightsSlugRoute: typeof InsightsSlugRoute
+}
+
+const InsightsRouteChildren: InsightsRouteChildren = {
+  InsightsSlugRoute: InsightsSlugRoute,
+}
+
+const InsightsRouteWithChildren = InsightsRoute._addFileChildren(
+  InsightsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -284,7 +315,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExperienceRoute: ExperienceRoute,
   GalleryRoute: GalleryRoute,
   GuestbookRoute: GuestbookRoute,
-  InsightsRoute: InsightsRoute,
+  InsightsRoute: InsightsRouteWithChildren,
   NgoRoute: NgoRoute,
   ProjectsRoute: ProjectsRoute,
   ToolsRoute: ToolsRoute,
