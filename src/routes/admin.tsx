@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState, useCallback } from "react";
-import { Lock, Loader2, LogOut, Eye, EyeOff, Trash2, Save } from "lucide-react";
+import { Lock, Loader2, LogOut, Eye, EyeOff, Trash2, Save, PenLine, MessageSquareText } from "lucide-react";
 import { PageLayout } from "@/components/PageLayout";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
+import { ArticleStudio } from "@/components/ArticleStudio";
 import {
   adminLogin,
   adminLogout,
@@ -21,9 +22,13 @@ import {
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Admin — Guestbook Moderation" },
+      { title: "Private Content Studio — Kelvin Wambua" },
       { name: "robots", content: "noindex, nofollow" },
-      { name: "description", content: "Private admin panel." },
+      { name: "description", content: "Private content studio for managing reader messages and publishing Kelvin Wambua's articles." },
+      { property: "og:title", content: "Private Content Studio — Kelvin Wambua" },
+      { property: "og:description", content: "Manage reader messages and publish articles." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AdminPage,
@@ -53,6 +58,7 @@ function AdminPage() {
   const [items, setItems] = useState<AdminComment[]>([]);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+  const [section, setSection] = useState<"guestbook" | "articles">("guestbook");
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -182,15 +188,38 @@ function AdminPage() {
             <SectionHeading
               align="left"
               eyebrow="Admin"
-              title={<>Guestbook <span className="gradient-text">moderation</span></>}
-              description={`${items.length} total · ${items.filter((i) => i.is_visible).length} visible`}
+              title={<>Content <span className="gradient-text">studio</span></>}
+              description="Manage reader messages and write new articles."
             />
             <Button variant="outline" onClick={onLogout}>
               <LogOut className="h-4 w-4 mr-2" /> Sign out
             </Button>
           </div>
 
-          {loading ? (
+          <div className="mt-8 flex flex-wrap gap-2 border-b border-border pb-4" role="tablist" aria-label="Content management">
+            <Button
+              type="button"
+              role="tab"
+              aria-selected={section === "guestbook"}
+              variant={section === "guestbook" ? "default" : "outline"}
+              onClick={() => setSection("guestbook")}
+            >
+              <MessageSquareText className="mr-2 h-4 w-4" /> Guestbook
+            </Button>
+            <Button
+              type="button"
+              role="tab"
+              aria-selected={section === "articles"}
+              variant={section === "articles" ? "default" : "outline"}
+              onClick={() => setSection("articles")}
+            >
+              <PenLine className="mr-2 h-4 w-4" /> Articles
+            </Button>
+          </div>
+
+          {section === "articles" ? (
+            <ArticleStudio />
+          ) : loading ? (
             <p className="mt-8 text-sm text-muted-foreground">Loading…</p>
           ) : items.length === 0 ? (
             <p className="mt-8 text-sm text-muted-foreground">No comments yet.</p>

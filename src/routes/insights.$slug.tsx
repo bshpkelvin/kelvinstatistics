@@ -1,6 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
-import { PageLayout } from "@/components/PageLayout";
 import { getPublishedArticle } from "@/lib/articles.functions";
 
 export const Route = createFileRoute("/insights/$slug")({
@@ -24,28 +23,26 @@ export const Route = createFileRoute("/insights/$slug")({
     };
   },
   errorComponent: ({ error }) => (
-    <PageLayout>
-      <section className="section-pad">
-        <div className="container-prose max-w-3xl" role="alert">
-          <p className="text-muted-foreground">{error.message || "This article could not be loaded."}</p>
-          <Link to="/insights" className="mt-5 inline-flex items-center gap-2 text-primary">
-            <ArrowLeft className="h-4 w-4" /> Back to articles
-          </Link>
-        </div>
-      </section>
-    </PageLayout>
+    <section className="section-pad">
+      <div className="container-prose max-w-3xl" role="alert">
+        <p className="text-muted-foreground">
+          {error instanceof Error ? error.message : "This article could not be loaded."}
+        </p>
+        <Link to="/insights" className="mt-5 inline-flex items-center gap-2 text-primary">
+          <ArrowLeft className="h-4 w-4" /> Back to articles
+        </Link>
+      </div>
+    </section>
   ),
   notFoundComponent: () => (
-    <PageLayout>
-      <section className="section-pad">
-        <div className="container-prose max-w-3xl">
-          <h1 className="text-3xl font-bold text-foreground">Article not found</h1>
-          <Link to="/insights" className="mt-5 inline-flex items-center gap-2 text-primary">
-            <ArrowLeft className="h-4 w-4" /> Back to articles
-          </Link>
-        </div>
-      </section>
-    </PageLayout>
+    <section className="section-pad">
+      <div className="container-prose max-w-3xl">
+        <h1 className="text-3xl font-bold text-foreground">Article not found</h1>
+        <Link to="/insights" className="mt-5 inline-flex items-center gap-2 text-primary">
+          <ArrowLeft className="h-4 w-4" /> Back to articles
+        </Link>
+      </div>
+    </section>
   ),
   component: ArticlePage,
 });
@@ -57,7 +54,6 @@ function ArticlePage() {
   const readMinutes = Math.max(1, Math.ceil(wordCount / 220));
 
   return (
-    <PageLayout>
       <article className="section-pad">
         <div className="container-prose max-w-3xl">
           <Link to="/insights" className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
@@ -93,6 +89,5 @@ function ArticlePage() {
           </footer>
         </div>
       </article>
-    </PageLayout>
   );
 }

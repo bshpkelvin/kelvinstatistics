@@ -26,6 +26,8 @@ export const Route = createFileRoute("/gallery")({
       { name: "description", content: "Photo gallery from Kelvin Wambua's fieldwork across Kenya: M&E missions, community engagement, Hope for Kibera, and humanitarian moments." },
       { property: "og:title", content: "Gallery — Fieldwork & Community" },
       { property: "og:description", content: "Moments from M&E missions and community work across Kenya." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: field },
       { name: "twitter:image", content: field },
     ],

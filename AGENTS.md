@@ -1,3 +1,3 @@
 # Architecture Rules
 
-- Keep article publishing in the existing `/insights` public section and the password-protected `/admin` studio, with server-side validation and published-only public reads, so writing stays manageable without exposing drafts.
+- Keep `/insights` as a shared layout with a listing leaf and dynamic article leaf, plus password-protected `/admin` management; server-side validation and published-only reads keep drafts private.

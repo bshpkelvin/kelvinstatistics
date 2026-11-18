@@ -21,6 +21,8 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Get in touch with Kelvin Wambua for M&E consulting, data analysis, and humanitarian collaborations. Based in Nairobi, Kenya." },
       { property: "og:title", content: "Contact — Kelvin Wambua" },
       { property: "og:description", content: "Reach out for collaborations, consulting and partnership opportunities." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ContactPage,

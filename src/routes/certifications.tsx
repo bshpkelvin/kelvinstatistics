@@ -26,6 +26,8 @@ export const Route = createFileRoute("/certifications")({
         property: "og:description",
         content: "Professional trainings and certificates supporting Kelvin Wambua's M&E and data work.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: CertificationsPage,

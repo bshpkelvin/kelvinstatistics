@@ -13,6 +13,8 @@ export const Route = createFileRoute("/experience")({
       { name: "description", content: "Professional experience of Kelvin Wambua: M&E officer with World Vision Kenya's THRIVE Project, ODK Collect data collection, VisionFund Kenya loan surveys, and fieldwork in Isiolo and Kilifi." },
       { property: "og:title", content: "Experience — Kelvin Wambua" },
       { property: "og:description", content: "M&E experience across humanitarian and development projects in Kenya." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: fieldImg },
       { name: "twitter:image", content: fieldImg },
     ],

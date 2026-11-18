@@ -20,6 +20,8 @@ export const Route = createFileRoute("/tools")({
       { name: "description", content: "The data collection, analysis and visualization tools Kelvin Wambua uses for M&E and humanitarian research: ODK, KoboToolbox, R, SPSS, Power BI, Excel, QGIS." },
       { property: "og:title", content: "Tools & Tech Stack — Kelvin Wambua" },
       { property: "og:description", content: "Field-tested M&E and data analysis toolkit." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ToolsPage,

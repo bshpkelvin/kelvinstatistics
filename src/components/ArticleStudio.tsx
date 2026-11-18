@@ -164,7 +164,10 @@ export function ArticleStudio() {
                 setArticle((current) => ({
                   ...current,
                   title,
-                  slug: current.id || current.slug ? current.slug : makeSlug(title),
+                  slug:
+                    current.id || (current.slug && current.slug !== makeSlug(current.title))
+                      ? current.slug
+                      : makeSlug(title),
                 }));
               }}
             />

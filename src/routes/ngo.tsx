@@ -14,6 +14,8 @@ export const Route = createFileRoute("/ngo")({
       { name: "description", content: "Hope for Kibera is a community organisation founded by Kelvin Wambua supporting 156+ vulnerable children with education, meals and mentorship in Nairobi's Kibera." },
       { property: "og:title", content: "Hope for Kibera — Community Impact" },
       { property: "og:description", content: "156+ children supported. $10,000+ raised. Building hope, one child at a time." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: children },
       { name: "twitter:image", content: children },
     ],

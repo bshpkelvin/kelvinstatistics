@@ -1,3 +1,3 @@
-- [ ] Add an articles table with public access limited to published posts.
-- [ ] Add public article listing/detail pages and password-protected article management.
-- [ ] Verify published article flow, route metadata, and preview health.
+- [x] Add an articles table with public access limited to published posts.
+- [x] Add public article listing/detail pages and password-protected article management.
+- [x] Verify published article flow, route metadata, and preview health.

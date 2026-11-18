@@ -1,37 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { useSession } from "@tanstack/react-start/server";
 import { z } from "zod";
-import { createHash, timingSafeEqual } from "node:crypto";
-
-type AdminSession = { isAdmin?: boolean };
-
-function sessionConfig() {
-  const password = process.env.ADMIN_SESSION_SECRET;
-  if (!password) throw new Error("ADMIN_SESSION_SECRET is not set");
-  return {
-    password,
-    name: "guestbook-admin",
-    maxAge: 60 * 60 * 8,
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax" as const,
-      path: "/",
-    },
-  };
-}
-
-function passwordMatches(input: string, expected: string) {
-  const a = createHash("sha256").update(input, "utf8").digest();
-  const b = createHash("sha256").update(expected, "utf8").digest();
-  return timingSafeEqual(a, b);
-}
-
-export async function requireAdmin() {
-  const session = await useSession<AdminSession>(sessionConfig());
-  if (!session.data.isAdmin) throw new Error("Unauthorized");
-  return session;
-}
 
 const submitSchema = z.object({
   sender_name: z.string().trim().min(2).max(80),
@@ -68,26 +36,30 @@ export const listVisibleComments = createServerFn({ method: "GET" }).handler(asy
 export const adminLogin = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => z.object({ password: z.string().min(1) }).parse(input))
   .handler(async ({ data }) => {
+    const { getAdminSession, passwordMatches } = await import("@/lib/admin-session.server");
     const expected = process.env.ADMIN_PASSWORD;
     if (!expected) throw new Error("ADMIN_PASSWORD not configured");
     if (!passwordMatches(data.password, expected)) return { ok: false as const };
-    const session = await useSession<AdminSession>(sessionConfig());
+    const session = await getAdminSession();
     await session.update({ isAdmin: true });
     return { ok: true as const };
   });
 
 export const adminLogout = createServerFn({ method: "POST" }).handler(async () => {
-  const session = await useSession<AdminSession>(sessionConfig());
+  const { getAdminSession } = await import("@/lib/admin-session.server");
+  const session = await getAdminSession();
   await session.clear();
   return { ok: true as const };
 });
 
 export const adminCheck = createServerFn({ method: "GET" }).handler(async () => {
-  const session = await useSession<AdminSession>(sessionConfig());
+  const { getAdminSession } = await import("@/lib/admin-session.server");
+  const session = await getAdminSession();
   return { isAdmin: !!session.data.isAdmin };
 });
 
 export const adminListAllComments = createServerFn({ method: "GET" }).handler(async () => {
+  const { requireAdmin } = await import("@/lib/admin-session.server");
   await requireAdmin();
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { data, error } = await supabaseAdmin
@@ -108,6 +80,7 @@ const updateSchema = z.object({
 export const adminUpdateComment = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => updateSchema.parse(input))
   .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-session.server");
     await requireAdmin();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const patch: { reply_text?: string | null; is_visible?: boolean } = {};
@@ -121,6 +94,7 @@ export const adminUpdateComment = createServerFn({ method: "POST" })
 export const adminDeleteComment = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-session.server");
     await requireAdmin();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await supabaseAdmin.from("comments").delete().eq("id", data.id);

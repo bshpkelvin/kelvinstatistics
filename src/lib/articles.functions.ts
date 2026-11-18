@@ -2,7 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
-import { requireAdmin } from "@/lib/comments.functions";
 
 function createPublicReader(url: string, key: string) {
   return createClient<Database>(url, key, {
@@ -53,6 +52,7 @@ export const getPublishedArticle = createServerFn({ method: "GET" })
   });
 
 export const adminListArticles = createServerFn({ method: "GET" }).handler(async () => {
+  const { requireAdmin } = await import("@/lib/admin-session.server");
   await requireAdmin();
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { data, error } = await supabaseAdmin
@@ -82,6 +82,7 @@ const articleInputSchema = z
 export const adminSaveArticle = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => articleInputSchema.parse(input))
   .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-session.server");
     await requireAdmin();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const articleFields = {
@@ -133,6 +134,7 @@ export const adminSaveArticle = createServerFn({ method: "POST" })
 export const adminSetArticlePublished = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid(), is_published: z.boolean() }).parse(input))
   .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-session.server");
     await requireAdmin();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: existing, error: lookupError } = await supabaseAdmin
@@ -155,6 +157,7 @@ export const adminSetArticlePublished = createServerFn({ method: "POST" })
 export const adminDeleteArticle = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ data }) => {
+    const { requireAdmin } = await import("@/lib/admin-session.server");
     await requireAdmin();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await supabaseAdmin.from("articles").delete().eq("id", data.id);

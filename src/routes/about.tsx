@@ -13,6 +13,8 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: "Learn about Kelvin Wambua's journey: Applied Statistics graduate from Rongo University, M&E officer with World Vision Kenya, and humanitarian leader." },
       { property: "og:title", content: "About Kelvin Wambua" },
       { property: "og:description", content: "M&E specialist passionate about data-driven humanitarian impact in Kenya." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: portrait },
       { name: "twitter:image", content: portrait },
     ],

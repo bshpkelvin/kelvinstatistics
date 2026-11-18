@@ -18,6 +18,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Portfolio of Kelvin Wambua — Monitoring & Evaluation specialist and data analyst transforming community data into measurable humanitarian impact across Kenya." },
       { property: "og:title", content: "Kelvin Wambua — Turning Data into Impact" },
       { property: "og:description", content: "M&E specialist, data analyst and humanitarian practitioner based in Nairobi." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: portrait },
       { name: "twitter:image", content: portrait },
     ],

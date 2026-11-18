@@ -18,6 +18,8 @@ export const Route = createFileRoute("/guestbook")({
       { name: "description", content: "Leave a message or read what visitors are saying about Kelvin Wambua's M&E and data work." },
       { property: "og:title", content: "Guestbook — Kelvin Wambua" },
       { property: "og:description", content: "Sign the guestbook and share a note." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: GuestbookPage,

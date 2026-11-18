@@ -25,6 +25,8 @@ export const Route = createFileRoute("/projects")({
       { name: "description", content: "Selected M&E and data analysis projects: VisionFund Kenya loan distribution survey, MVC mapping in Kilifi, and ODK-based data collection systems." },
       { property: "og:title", content: "Projects — Kelvin Wambua" },
       { property: "og:description", content: "M&E and data projects across Kenya's humanitarian sector." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: dataImg },
       { name: "twitter:image", content: dataImg },
     ],
